@@ -26,6 +26,14 @@ class HelloWorldService(ServiceBase):
             yield u'Tere, %s' % name
 
 
+    @rpc(Unicode, _returns=Unicode)
+    def more_info(ctx, domain_name):
+        ns = os.popen(f'dig NS {domain_name}').read()
+        mx = os.popen(f'dig MX {domain_name}').read()
+        soa = os.popen(f'dig SOA {domain_name}').read()
+
+        return  "NS:\n" + ns + "\nMX:\n" + mx + "\nSOA:\n" + soa
+
 application = Application([HelloWorldService], 'spyne.examples.hello.soap',
                           in_protocol=Soap11(validator='lxml'),
                           out_protocol=Soap11())

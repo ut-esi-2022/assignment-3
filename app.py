@@ -3,11 +3,11 @@ from flask import Flask
 from suds.client import Client
 
 app = Flask("__name__")
-client = Client('link to your wsdl file', cache=None)
+client = Client('http://localhost:8090/?wsdl', cache=None)
 
 @app.route('/')
 def index():
-    return client.service.your_method_name(arguments)
+    return client.service.HelloWorldService()
 
 
 if __name__ == "__main__":

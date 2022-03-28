@@ -24,7 +24,10 @@ class HelloWorldService(ServiceBase):
 
         for i in range(times):
             yield u'Tere, %s' % name
-
+    
+    @rpc(Unicode, _returns=Unicode)
+    def ping_host(ctx, domain_name):
+        return os.popen(f'ping -c 2 {domain_name}').read()
 
     @rpc(Unicode, _returns=Unicode)
     def res_name(ctx, domain_name):

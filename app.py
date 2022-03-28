@@ -23,7 +23,7 @@ def host():
 
 
 @app.route('/dns', methods=['GET'])
-def host():
+def dns():
     global client
     domain_name = request.args.get('domain_name')
     if domain_name is None:

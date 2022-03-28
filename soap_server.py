@@ -34,6 +34,15 @@ class HelloWorldService(ServiceBase):
 
         return  "NS:\n" + ns + "\nMX:\n" + mx + "\nSOA:\n" + soa
 
+    @rpc(Unicode, _returns=Unicode)
+    def res_name(ctx, domain_name):
+        """Docstrings for service methods appear as documentation in the wsdl.
+        <b>What fun!</b>
+        @param domain_name the domain name to call host command on
+        @return the return of host command
+        """
+        return os.popen(f'host {domain_name}').read()
+
 application = Application([HelloWorldService], 'spyne.examples.hello.soap',
                           in_protocol=Soap11(validator='lxml'),
                           out_protocol=Soap11())

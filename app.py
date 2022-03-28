@@ -1,14 +1,16 @@
+import os
 from datetime import datetime
 from flask import Flask, request
 from suds.client import Client
 
 app = Flask("__name__")
 # client = Client('http://localhost:8090/?wsdl', cache=None)
-
+server_uri = os.environ.get('SERVER_URI')
 
 @app.route('/')
 def index():
-    return "It's working!"
+    global server_uri
+    return f"Server URL: {server_uri}"
 
 
 # @app.route('/showip', methods=['GET'])

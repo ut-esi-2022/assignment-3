@@ -27,14 +27,6 @@ class HelloWorldService(ServiceBase):
 
 
     @rpc(Unicode, _returns=Unicode)
-    def more_info(ctx, domain_name):
-        ns = os.popen(f'dig NS {domain_name}').read()
-        mx = os.popen(f'dig MX {domain_name}').read()
-        soa = os.popen(f'dig SOA {domain_name}').read()
-
-        return  "NS:\n" + ns + "\nMX:\n" + mx + "\nSOA:\n" + soa
-
-    @rpc(Unicode, _returns=Unicode)
     def res_name(ctx, domain_name):
         """Docstrings for service methods appear as documentation in the wsdl.
         <b>What fun!</b>
@@ -42,6 +34,15 @@ class HelloWorldService(ServiceBase):
         @return the return of host command
         """
         return os.popen(f'host {domain_name}').read()
+
+
+    @rpc(Unicode, _returns=Unicode)
+    def more_info(ctx, domain_name):
+        ns = os.popen(f'dig NS {domain_name}').read()
+        mx = os.popen(f'dig MX {domain_name}').read()
+        soa = os.popen(f'dig SOA {domain_name}').read()
+
+        return  "NS:\n" + ns + "\nMX:\n" + mx + "\nSOA:\n" + soa
 
 application = Application([HelloWorldService], 'spyne.examples.hello.soap',
                           in_protocol=Soap11(validator='lxml'),
